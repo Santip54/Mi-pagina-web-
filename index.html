@@ -1,0 +1,168 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>!SORPRESA¡</title>
+  <style>
+    /* (mantén tu CSS actual) */
+    body {
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fef6f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #eac7d3;
+      color: #4b3b47;
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    #contenido-capitulo {
+      background-color: white;
+      margin: 1.5rem;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    nav {
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0 1rem;
+    }
+
+    button {
+      padding: 0.6rem 1rem;
+      border: none;
+      background-color: #a58fd3;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      flex: 1 1 calc(50% - 0.5rem);
+      min-width: 140px;
+    }
+
+    button:hover {
+      background-color: #9173c0;
+    }
+
+    audio {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1.4rem;
+        padding: 0.8rem;
+      }
+
+      #contenido-capitulo {
+        margin: 1rem;
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>!SORPRESA¡</h1>
+  </header>
+
+  <nav>
+    <button onclick="cargarCapitulo('felizcumpleaños.html')">Feliz cumpleaños</button>
+    <button onclick="cargarCapitulo('cap1.html')">Fragmentos de ti</button>
+    <button onclick="cargarCapitulo('cap2.html')">Capítulo 2</button>
+    <button onclick="cargarCapitulo('cap3.html')">Capítulo 3</button>
+    <button onclick="cargarCapitulo('cap4.html')">Capítulo 4</button>
+    <button onclick="cargarCapitulo('cap5.html')">Solo para ti</button>
+  </nav>
+
+  <div id="contenido-capitulo">
+    <p>Haz clic en un capítulo para comenzar a leer.</p>
+  </div>
+
+  <!-- Reproductor de audio -->
+  <audio id="musica" loop>
+    <source src="musica/mus.mp3" type="audio/mpeg" />
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+    let musicaIniciada = false;
+
+    function controlarMusicaConVideo(video) {
+      const musica = document.getElementById('musica');
+
+      if (!video) return;
+
+      // Agregar listeners para pausar/reanudar música
+      video.addEventListener('play', () => {
+        if (!musica.paused) {
+          musica.pause();
+        }
+      });
+
+      video.addEventListener('pause', () => {
+        if (musica.paused) {
+          musica.play().catch(() => {});
+        }
+      });
+
+      video.addEventListener('ended', () => {
+        if (musica.paused) {
+          musica.play().catch(() => {});
+        }
+      });
+    }
+
+    function cargarCapitulo(nombreArchivo) {
+      const musica = document.getElementById('musica');
+
+      if (!musicaIniciada) {
+        musica.play().catch(() => {
+          // Puede fallar en navegadores sin interacción previa, ignora
+        });
+        musicaIniciada = true;
+      }
+
+      fetch(nombreArchivo)
+        .then(res => res.text())
+        .then(data => {
+          const contenedor = document.getElementById('contenido-capitulo');
+          contenedor.innerHTML = data;
+
+          // Buscar video dentro del capítulo cargado y controlar la música
+          const video = contenedor.querySelector('video');
+          controlarMusicaConVideo(video);
+        })
+        .catch(() => {
+          document.getElementById('contenido-capitulo').innerHTML = '<p>Error al cargar el capítulo.</p>';
+        });
+    }
+  </script>
+</body>
+</html>

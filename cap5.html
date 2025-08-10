@@ -1,0 +1,51 @@
+<div class="chapter-content">
+  <h2>Capítulo 5: Solo para ti</h2>
+  <div class="video-container">
+    <video id="video" controls poster="imagenes/fondo1.jpeg">
+      <source src="imagenes/mp4.mp4" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+  </div>
+</div>
+
+<style>
+  .chapter-content {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 40px 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    font-family: 'Georgia', serif;
+    color: #3c2f2f;
+  }
+
+  h2 {
+    font-size: 2em;
+    color: #8a5c4d;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .video-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  video {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  @media (max-width: 600px) {
+    .chapter-content {
+      padding: 25px;
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+</style>
